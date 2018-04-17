@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+  postgresql:
+    image: 'bitnami/postgresql:latest'
+    labels:
+      kompose.service.type: nodeport
+    ports:
+      - '5432:5432'
+    volumes:
+      - 'postgresql_data:/bitnami'
+    networks:
+      - app-tier
+  
+  pgadmin:
+    image: 'fenglc/pgadmin4:latest'
+    ports:
+      - '5050:5050'
+    networks:
+      - app-tier
+
+volumes:
+  postgresql_data:
+    driver: local
+
+networks:
+    app-tier:
+        driver: bridge
